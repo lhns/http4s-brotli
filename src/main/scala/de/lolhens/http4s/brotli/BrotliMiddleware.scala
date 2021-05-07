@@ -4,7 +4,7 @@ import cats.effect.{Blocker, ConcurrentEffect, ContextShift}
 import fs2.Pipe
 import org.brotli.dec.BrotliInputStream
 import org.http4s.headers.{`Content-Encoding`, `Content-Length`}
-import org.http4s.{ContentCoding, HttpRoutes, Response}
+import org.http4s.{ContentCoding, HttpRoutes, Message, Request}
 
 object BrotliMiddleware {
   def brotliDecompress[F[_] : ConcurrentEffect : ContextShift](blocker: Blocker,
@@ -16,22 +16,22 @@ object BrotliMiddleware {
         }, bufferSize, blocker)
       }
 
-  def response[F[_] : ConcurrentEffect : ContextShift](response: Response[F],
-                                                       blocker: Blocker,
-                                                       bufferSize: Int = BrotliInputStream.DEFAULT_INTERNAL_BUFFER_SIZE): Response[F] =
-    response.headers.get(`Content-Encoding`).map(_.contentCoding) match {
+  def decompress[F[_] : ConcurrentEffect : ContextShift](message: Message[F],
+                                                         blocker: Blocker,
+                                                         bufferSize: Int = BrotliInputStream.DEFAULT_INTERNAL_BUFFER_SIZE): message.Self =
+    message.headers.get(`Content-Encoding`).map(_.contentCoding) match {
       case Some(ContentCoding.br) =>
-        response
-          .withBodyStream(response.body.through(brotliDecompress(blocker, bufferSize)))
+        message
+          .withBodyStream(message.body.through(brotliDecompress(blocker, bufferSize)))
           .removeHeader(`Content-Encoding`)
           .removeHeader(`Content-Length`)
 
-      case _ => response
+      case _ => message.covary
     }
 
   def apply[F[_] : ConcurrentEffect : ContextShift](routes: HttpRoutes[F],
                                                     blocker: Blocker,
                                                     bufferSize: Int = BrotliInputStream.DEFAULT_INTERNAL_BUFFER_SIZE): HttpRoutes[F] =
-    routes.map(response(_, blocker, bufferSize))
+    routes.local[Request[F]](decompress(_, blocker, bufferSize))
 
 }
