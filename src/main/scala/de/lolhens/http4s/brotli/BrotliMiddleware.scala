@@ -31,7 +31,7 @@ object BrotliMiddleware {
 
   def apply[F[_] : ConcurrentEffect : ContextShift](routes: HttpRoutes[F],
                                                     blocker: Blocker,
-                                                    chunkSize: Int = 10240): HttpRoutes[F] =
-    routes.map(response(_, blocker, chunkSize))
+                                                    bufferSize: Int = BrotliInputStream.DEFAULT_INTERNAL_BUFFER_SIZE): HttpRoutes[F] =
+    routes.map(response(_, blocker, bufferSize))
 
 }
