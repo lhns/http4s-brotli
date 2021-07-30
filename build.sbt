@@ -25,7 +25,7 @@ developers := List(
 )
 
 libraryDependencies ++= Seq(
-  "org.http4s" %% "http4s-core" % "0.21.25",
+  "org.http4s" %% "http4s-core" % "0.22.1",
   "org.brotli" % "dec" % "0.1.2",
 )
 
