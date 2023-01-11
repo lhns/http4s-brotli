@@ -12,7 +12,7 @@
 
 ```sbt
 // use this snippet for http4s 0.23
-libraryDependencies += "de.lolhens" %% "http4s-brotli" % "0.4.0"
+libraryDependencies += "de.lolhens" %% "http4s-brotli" % "0.5.0"
 
 // use this snippet for http4s 0.22
 libraryDependencies += "de.lolhens" %% "http4s-brotli" % "0.2.0"
