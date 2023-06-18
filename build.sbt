@@ -26,7 +26,7 @@ developers := List(
 
 libraryDependencies ++= Seq(
   "de.lhns" %% "fs2-compress-brotli" % "0.5.0",
-  "org.http4s" %% "http4s-core" % "0.23.19",
+  "org.http4s" %% "http4s-core" % "0.23.21",
 )
 
 addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
