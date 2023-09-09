@@ -25,7 +25,7 @@ developers := List(
 )
 
 libraryDependencies ++= Seq(
-  "de.lhns" %% "fs2-compress-brotli" % "0.5.0",
+  "de.lhns" %% "fs2-compress-brotli" % "1.0.0",
   "org.http4s" %% "http4s-core" % "0.23.19",
 )
 
