@@ -10,12 +10,11 @@ import org.http4s.{ContentCoding, HttpRoutes, Message, Request}
 import scala.util.control.NoStackTrace
 
 object BrotliMiddleware {
-  def decompress[F[_] : Async](message: Message[F],
-                               chunkSize: Int = BrotliDecompressor.defaultChunkSize): message.Self =
+  def decompress[F[_] : Async: BrotliDecompressor](message: Message[F]): message.Self =
     message.headers.get[`Content-Encoding`].map(_.contentCoding) match {
       case Some(ContentCoding.br) =>
         message
-          .withBodyStream(message.body.through(decompressWith(BrotliDecompressor[F](chunkSize).decompress)))
+          .withBodyStream(message.body.through(decompressWith(BrotliDecompressor[F].decompress)))
           .removeHeader[`Content-Encoding`]
           .removeHeader[`Content-Length`]
 
@@ -38,7 +37,6 @@ object BrotliMiddleware {
 
   private object EmptyBodyException extends Throwable with NoStackTrace
 
-  def apply[F[_] : Async](routes: HttpRoutes[F],
-                          chunkSize: Int = BrotliDecompressor.defaultChunkSize): HttpRoutes[F] =
-    routes.local[Request[F]](decompress(_, chunkSize))
+  def apply[F[_] : Async: BrotliDecompressor](routes: HttpRoutes[F]): HttpRoutes[F] =
+    routes.local[Request[F]](decompress(_))
 }
