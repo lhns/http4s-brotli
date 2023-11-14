@@ -13,15 +13,13 @@ import org.http4s.{ContentCoding, Request}
   */
 object BrotliClientMiddleware {
 
-  def apply[F[_]: Async](
-    bufferSize: Int = BrotliDecompressor.defaultChunkSize
-  )(client: Client[F]): Client[F] =
+  def apply[F[_]: Async: BrotliDecompressor](client: Client[F]): Client[F] =
     Client[F] { req =>
       val reqWithEncoding  = addHeaders(req)
       val responseResource = client.run(reqWithEncoding)
 
       responseResource.map { actualResponse =>
-        BrotliMiddleware.decompress(actualResponse, bufferSize)
+        BrotliMiddleware.decompress(actualResponse)
       }
     }
 
