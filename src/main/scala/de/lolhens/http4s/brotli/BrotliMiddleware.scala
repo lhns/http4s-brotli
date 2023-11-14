@@ -38,5 +38,5 @@ object BrotliMiddleware {
   private object EmptyBodyException extends Throwable with NoStackTrace
 
   def apply[F[_] : Async: BrotliDecompressor](routes: HttpRoutes[F]): HttpRoutes[F] =
-    routes.local[Request[F]](decompress)
+    routes.local[Request[F]](decompress(_))
 }
