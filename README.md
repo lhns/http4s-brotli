@@ -1,6 +1,6 @@
 # http4s-brotli
 
-[![Test Workflow](https://github.com/lhns/http4s-brotli/workflows/test/badge.svg)](https://github.com/LolHens/http4s-brotli/actions?query=workflow%3Atest)
+[![Test Workflow](https://github.com/lhns/http4s-brotli/workflows/test/badge.svg)](https://github.com/lhns/http4s-brotli/actions?query=workflow%3Atest)
 [![Release Notes](https://img.shields.io/github/release/lhns/http4s-brotli.svg?maxAge=3600)](https://github.com/lhns/http4s-brotli/releases/latest)
 [![Maven Central](https://img.shields.io/maven-central/v/de.lolhens/http4s-brotli_2.13)](https://search.maven.org/artifact/de.lolhens/http4s-brotli_2.13)
 [![Apache License 2.0](https://img.shields.io/github/license/lhns/http4s-brotli.svg?maxAge=3600)](https://www.apache.org/licenses/LICENSE-2.0)
