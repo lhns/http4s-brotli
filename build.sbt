@@ -6,7 +6,7 @@ version := {
     .getOrElse("0.0.1-SNAPSHOT")
 }
 
-scalaVersion := "2.13.11"
+scalaVersion := "2.13.12"
 crossScalaVersions := Seq("2.12.18", scalaVersion.value)
 
 ThisBuild / versionScheme := Some("early-semver")
@@ -16,20 +16,27 @@ licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0"))
 homepage := scmInfo.value.map(_.browseUrl)
 scmInfo := Some(
   ScmInfo(
-    url("https://github.com/LolHens/http4s-brotli"),
-    "scm:git@github.com:LolHens/http4s-brotli.git"
+    url("https://github.com/lhns/http4s-brotli"),
+    "scm:git@github.com:lhns/http4s-brotli.git"
   )
 )
 developers := List(
-  Developer(id = "LolHens", name = "Pierre Kisters", email = "pierrekisters@gmail.com", url = url("https://github.com/LolHens/"))
+  Developer(id = "lhns", name = "Pierre Kisters", email = "pierrekisters@gmail.com", url = url("https://github.com/lhns/"))
 )
+
+lazy val V = new {
+  val betterMonadicFor = "0.3.1"
+  val fs2Compress = "0.5.0"
+  val http4s = "0.23.23"
+}
 
 libraryDependencies ++= Seq(
-  "de.lhns" %% "fs2-compress-brotli" % "0.5.0",
-  "org.http4s" %% "http4s-core" % "0.23.23",
+  "de.lhns" %% "fs2-compress-brotli" % V.fs2Compress,
+  "org.http4s" %% "http4s-core"   % V.http4s,
+  "org.http4s" %% "http4s-client" % V.http4s,
 )
 
-addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
+addCompilerPlugin("com.olegpy" %% "better-monadic-for" % V.betterMonadicFor)
 
 Compile / doc / sources := Seq.empty
 
