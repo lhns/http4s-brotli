@@ -27,7 +27,7 @@ developers := List(
 lazy val V = new {
   val betterMonadicFor = "0.3.1"
   val fs2Compress = "1.0.0"
-  val http4s = "0.23.23"
+  val http4s = "0.23.25"
 }
 
 libraryDependencies ++= Seq(
