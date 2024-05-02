@@ -6,7 +6,7 @@ version := {
     .getOrElse("0.0.1-SNAPSHOT")
 }
 
-scalaVersion := "2.13.12"
+scalaVersion := "2.13.14"
 crossScalaVersions := Seq("2.12.18", scalaVersion.value)
 
 ThisBuild / versionScheme := Some("early-semver")
