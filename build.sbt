@@ -26,7 +26,7 @@ developers := List(
 
 lazy val V = new {
   val betterMonadicFor = "0.3.1"
-  val fs2Compress = "1.0.0"
+  val fs2Compress = "3.0.1"
   val http4s = "0.23.27"
 }
 
